@@ -1,14 +1,9 @@
 pipeline {
-   environment {
-     REGISTRY_ENDPOINT = "https://registry.cn-hangzhou.aliyuncs.com/v2/"
-     IMAGE_WITH_TAG = "registry.cn-hangzhou.aliyuncs.com/jingshan/springbootstrap"
-     REGISTRY_CERTS = "registry"
-   }
   agent {
     node {
-      label 'java'
+      label 'k8s'
     }
-
+    
   }
   stages {
     stage('Build') {
@@ -30,7 +25,7 @@ pipeline {
             echo e
           }
         }
-
+        
       }
     }
     stage('Image Build&Publish') {
@@ -42,9 +37,14 @@ pipeline {
             sh 'docker push ${IMAGE_WITH_TAG}'
           }
         }
-
+        
       }
     }
+  }
+  environment {
+    REGISTRY_ENDPOINT = 'https://registry.cn-hangzhou.aliyuncs.com/v2/'
+    IMAGE_WITH_TAG = 'registry.cn-hangzhou.aliyuncs.com/jingshan/springbootstrap'
+    REGISTRY_CERTS = 'registry'
   }
   triggers {
     pollSCM('* * * * *')

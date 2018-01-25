@@ -32,6 +32,10 @@ pipeline {
       steps {
         echo 'Build Images'
         script {
+          withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'registry2',
+            usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+             sh 'docker login -u ${USERNAME} -p ${PASSWORD} registry.cn-hangzhou.aliyuncs.com'    
+          } 
           docker.withRegistry("${REGISTRY_ENDPOINT}", "${REGISTRY_CERTS}") {
             sh 'docker build -t ${IMAGE_WITH_TAG} .'
             sh 'docker push ${IMAGE_WITH_TAG}'

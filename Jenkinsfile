@@ -8,16 +8,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'mvn package'
-      }
-    }
-    stage('Test') {
-      steps {
-        sh 'mvn test '
-      }
-    }
-    stage('Image Build&Publish') {
-      steps {
+        echo 'Build success.'
         echo 'Build Images'
         script {
           withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'registry2',
@@ -29,7 +20,11 @@ pipeline {
             sh 'docker push ${IMAGE_WITH_TAG}'
           }
         }
-        
+      }
+    }
+    stage('Test') {
+      steps {
+        sh 'mvn test '
       }
     }
     stage('Deploy to Test Env') {
@@ -37,6 +32,21 @@ pipeline {
         script {
           kubernetesDeploy configs: 'kubernetes-deployment-svc.yaml', credentialsType: 'SSH', kubeConfig: [path: ''], secretName: '', ssh: [sshCredentialsId: 'k8s-master1', sshServer: '101.37.109.117'], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
           kubernetesDeploy configs: 'kubernetes-deployment-deploy.yaml', credentialsType: 'SSH', kubeConfig: [path: ''], secretName: '', ssh: [sshCredentialsId: 'k8s-master1', sshServer: '101.37.109.117'], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+        }
+      }
+    }
+    stage('Approve') {
+      steps {
+        script {
+          input 'Please approve production env deployment.'
+        }
+      }
+    }
+    stage('Deploy to Product Env') {
+      steps {
+        script {
+          kubernetesDeploy configs: 'kubernetes-deployment-svc.yaml', credentialsType: 'SSH', kubeConfig: [path: ''], secretName: '', ssh: [sshCredentialsId: 'k8s-master1', sshServer: '114.55.182.177'], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+          kubernetesDeploy configs: 'kubernetes-deployment-deploy.yaml', credentialsType: 'SSH', kubeConfig: [path: ''], secretName: '', ssh: [sshCredentialsId: 'k8s-master1', sshServer: '114.55.182.177'], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
         }
       }
     }

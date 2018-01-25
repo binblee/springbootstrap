@@ -16,18 +16,6 @@ pipeline {
         sh 'mvn test '
       }
     }
-    stage('Code Quality') {
-      steps {
-        script {
-          try{
-            checkstyle canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '', unHealthy: ''
-          }catch(e){
-            echo e
-          }
-        }
-        
-      }
-    }
     stage('Image Build&Publish') {
       steps {
         echo 'Build Images'

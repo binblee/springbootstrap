@@ -57,6 +57,6 @@ pipeline {
     REGISTRY_CERTS = 'registry'
   }
   triggers {
-    pollSCM('H/1 * * * *')
+    pollSCM('*/1 * * * *')
   }
 }

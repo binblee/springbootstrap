@@ -15,6 +15,7 @@ spec:
     spec:
       containers:
       - image: registry.cn-hangzhou.aliyuncs.com/jingshan/springbootstrap:latest
+        imagePullPolicy: Always
         name: web
         ports:
         - containerPort: 8080

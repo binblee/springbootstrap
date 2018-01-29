@@ -45,8 +45,8 @@ pipeline {
     stage('Deploy to Product Env') {
       steps {
         script {
-          kubernetesDeploy configs: 'kubernetes-deployment-svc.yaml', credentialsType: 'SSH', kubeConfig: [path: ''], secretName: '', ssh: [sshCredentialsId: 'k8s-master1', sshServer: '114.55.182.177'], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
-          kubernetesDeploy configs: 'kubernetes-deployment-deploy.yaml', credentialsType: 'SSH', kubeConfig: [path: ''], secretName: '', ssh: [sshCredentialsId: 'k8s-master1', sshServer: '114.55.182.177'], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+          kubernetesDeploy configs: 'kubernetes-deployment-svc.yaml', credentialsType: 'SSH', kubeConfig: [path: ''], secretName: '', ssh: [sshCredentialsId: 'k8s-master1', sshServer: '101.37.112.76'], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+          kubernetesDeploy configs: 'kubernetes-deployment-deploy.yaml', credentialsType: 'SSH', kubeConfig: [path: ''], secretName: '', ssh: [sshCredentialsId: 'k8s-master1', sshServer: '101.37.112.76'], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
         }
       }
     }

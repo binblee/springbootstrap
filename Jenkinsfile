@@ -16,8 +16,8 @@ pipeline {
              sh 'docker login -u ${USERNAME} -p ${PASSWORD} registry.cn-hangzhou.aliyuncs.com'    
           } 
           docker.withRegistry("${REGISTRY_ENDPOINT}", "${REGISTRY_CERTS}") {
-            sh 'docker build -t ${IMAGE_WITH_TAG} .'
-            sh 'docker push ${IMAGE_WITH_TAG}'
+            sh 'docker build -t ${IMAGE_WITH_TAG}:${BUILD_ID} .'
+            sh 'docker push ${IMAGE_WITH_TAG}:${BUILD_ID}'
           }
         }
       }
@@ -53,7 +53,7 @@ pipeline {
   }
   environment {
     REGISTRY_ENDPOINT = 'https://registry.cn-hangzhou.aliyuncs.com/v2/'
-    IMAGE_WITH_TAG = 'registry.cn-hangzhou.aliyuncs.com/jingshan/springbootstrap:3'
+    IMAGE_WITH_TAG = 'registry.cn-hangzhou.aliyuncs.com/jingshan/springbootstrap'
     REGISTRY_CERTS = 'registry'
   }
   triggers {

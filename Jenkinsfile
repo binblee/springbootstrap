@@ -17,7 +17,7 @@ pipeline {
           }
           docker.withRegistry("${REGISTRY_ENDPOINT}", "${REGISTRY_CERTS}") {
             sh 'docker build -t ${IMAGE_WITH_TAG}:${BUILD_ID} .'
-            sh 'docker push ${IMAGE_WITH_TAG}'
+            sh 'docker push ${IMAGE_WITH_TAG}:${BUILD_ID}'
           }
         }
         

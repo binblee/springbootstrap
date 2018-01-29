@@ -53,10 +53,10 @@ pipeline {
   }
   environment {
     REGISTRY_ENDPOINT = 'https://registry.cn-hangzhou.aliyuncs.com/v2/'
-    IMAGE_WITH_TAG = 'registry.cn-hangzhou.aliyuncs.com/jingshan/springbootstrap:1'
+    IMAGE_WITH_TAG = 'registry.cn-hangzhou.aliyuncs.com/jingshan/springbootstrap:2'
     REGISTRY_CERTS = 'registry'
   }
   triggers {
-    pollSCM('*/1 * * * *')
+    pollSCM('*/2 * * * *')
   }
 }
